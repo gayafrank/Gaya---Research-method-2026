@@ -98,19 +98,19 @@ This staining method helped distinguish tissue structures and made the gonadal d
 
 ## Images of Selected Histological Sections
 
-![Developing female gonad with late-stage oocytes](image2.png)
+![Developing female gonad with late-stage oocytes](images/image2.png)
 
 Figure 1: Well-preserved and clearly distinguishable histological section of a developing gonad, showing oocytes at multiple developmental stages, including numerous late-stage oocytes before spawning. This section allows reliable interpretation of the gonadal developmental stage.
 
-![Early-stage female gonad with tearing](image1.png)
+![Early-stage female gonad with tearing](images/image1.png)
 
 Figure 2: Female gonad at an early developmental stage, showing early-stage oocytes. The section appears torn; however, useful histological information can still be obtained from it.
 
-![Early reproductive-stage male gonad](image5.png)
+![Early reproductive-stage male gonad](images/image5.png)
 
 Figure 3: Male gonad at an early reproductive stage. The histological section appears clear and intact, without tearing, and can be reliably interpreted.
 
-![Peak reproductive-stage male gonad](image4.png)
+![Peak reproductive-stage male gonad](images/image4.png)
 
 Figure 4: Male gonad at peak reproductive activity, showing abundant sperm cells at advanced developmental stages. The histological section is clear and well-preserved, without tearing, and can be reliably interpreted.
 
