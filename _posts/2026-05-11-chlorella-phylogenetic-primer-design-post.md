@@ -42,7 +42,7 @@ Alignment steps:
 6. Used **Alignment → Align by ClustalW**.
 7. Saved the alignment as a MEGA alignment file.
 
-![Multiple sequence alignment in MEGA](images/alaignment.png)
+![Multiple sequence alignment in MEGA](/Gaya---Research-method-2026/images/alaignment.png)
 
 Figure 1: Multiple sequence alignment of *Chlorella* sequences in MEGA12.
 
@@ -85,7 +85,7 @@ The primer design settings used in Primer-BLAST were:
 | Organism field | `'Chlorella vulgaris' C-169 (taxid:574566)` as shown in Primer-BLAST |
 | Maximum target amplicon size | 4000 bp |
 
-![Primer-BLAST settings](images/blans_settings.png)
+![Primer-BLAST settings](/Gaya---Research-method-2026/images/blans_settings.png)
 
 Figure 2: Primer-BLAST settings used for primer design of the *Chlorella vulgaris* target sequence.
 
@@ -102,7 +102,7 @@ Expected PCR product length: **638 bp**.
 
 Primer-BLAST reported that the primer pair was specific to the input template in the selected database, with no other targets found under the selected search conditions.
 
-![Graphical view of Primer-BLAST primer pairs](images/blast_results.png)
+![Graphical view of Primer-BLAST primer pairs](/Gaya---Research-method-2026/images/blast_results.png)
 
 Figure 3: Graphical view of the selected Primer-BLAST primer pair and expected PCR product.
 
@@ -124,7 +124,7 @@ Tree-building settings:
 
 The tree was generated from the multiple sequence alignment. The final tree included four taxa: three *Chlorella vulgaris* sequences and one *Chlorella emersonii* sequence.
 
-![Neighbor-Joining phylogenetic tree in MEGA](images/tree.png)
+![Neighbor-Joining phylogenetic tree in MEGA](/Gaya---Research-method-2026/images/tree.png)
 
 Figure 4: Neighbor-Joining phylogenetic tree of *Chlorella vulgaris* and *Chlorella emersonii* sequences generated in MEGA12.
 
