@@ -1,3 +1,10 @@
+---
+layout: post
+title: "Histological Processing of Fish Gonads"
+date: 2026-05-21
+categories: notebook
+---
+
 # Histological Processing of Fish Gonads
 
 ## February 2026 Sampling
