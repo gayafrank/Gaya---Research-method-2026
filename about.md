@@ -9,7 +9,7 @@ I am a master student in marine biology science at the University of Haifa. My t
 
 ### More Information
 
-https://github.com/gayafrank/Gaya---Research-method-2026
+https://gayafrank.github.io/Gaya---Research-method-2026
 
 ### Contact me
 
