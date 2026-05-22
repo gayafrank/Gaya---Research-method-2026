@@ -5,8 +5,6 @@ date: 2026-05-01
 categories: notebook
 ---
 
-# Histological Processing of Fish Gonads
-
 ## February 2026 Sampling
 
 ### Overview
