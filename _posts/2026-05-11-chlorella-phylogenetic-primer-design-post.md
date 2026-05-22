@@ -1,4 +1,9 @@
-# Primer Design and Phylogenetic Analysis of *Chlorella vulgaris* Using the 18S rRNA/ITS Region
+---
+layout: post
+title: "Primer Design and Phylogenetic Analysis of *Chlorella vulgaris* Using the 18S rRNA/ITS Region"
+date: 2026-05-11
+categories: notebook
+---
 
 ## Objective
 
