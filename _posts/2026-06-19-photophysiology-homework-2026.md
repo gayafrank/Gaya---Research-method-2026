@@ -119,11 +119,13 @@ The strongest limitations are the small and uneven sample set, the removal of tw
 
 The supporting files for this post are saved in `photophysiology_homework_2026/`:
 
-- [`photophysiology_homework_2026.Rmd`](../photophysiology_homework_2026/photophysiology_homework_2026.Rmd): reproducible R analysis source.
-- [`photophysiology_parameters_tidy.csv`](../photophysiology_homework_2026/outputs/photophysiology_parameters_tidy.csv): tidy parameter table in the requested format.
-- [`photophysiology_parameters_with_readme.xlsx`](../photophysiology_homework_2026/outputs/photophysiology_parameters_with_readme.xlsx): Excel table with `Data` and `ReadMe` sheets.
-- [`photophysiology_homework_environment.RData`](../photophysiology_homework_2026/outputs/photophysiology_homework_environment.RData): saved R environment.
-- [`photophysiology_summary_table.csv`](../photophysiology_homework_2026/outputs/photophysiology_summary_table.csv): exported summary table.
-- [`paired_wilcoxon_tests.csv`](../photophysiology_homework_2026/outputs/paired_wilcoxon_tests.csv): exported statistical test table.
-- [`paired_taxon_differences.csv`](../photophysiology_homework_2026/outputs/paired_taxon_differences.csv): exported paired taxon differences and ratios.
-- [`package_versions.csv`](../photophysiology_homework_2026/outputs/package_versions.csv): package names and versions.
+| File | Purpose |
+|---|---|
+| [R Markdown analysis](../photophysiology_homework_2026/photophysiology_homework_2026.Rmd) | Reproducible R analysis source. |
+| [Tidy parameter CSV](../photophysiology_homework_2026/outputs/photophysiology_parameters_tidy.csv) | Parameter table organized in the requested format and ready for R. |
+| [Excel workbook with ReadMe](../photophysiology_homework_2026/outputs/photophysiology_parameters_with_readme.xlsx) | Excel output with `Data` and `ReadMe` sheets. |
+| [Saved R environment](../photophysiology_homework_2026/outputs/photophysiology_homework_environment.RData) | Saved R workspace from the analysis. |
+| [Summary statistics table](../photophysiology_homework_2026/outputs/photophysiology_summary_table.csv) | Exported summary table for fitted parameters. |
+| [Paired Wilcoxon tests](../photophysiology_homework_2026/outputs/paired_wilcoxon_tests.csv) | Exported statistical test table. |
+| [Paired taxon differences](../photophysiology_homework_2026/outputs/paired_taxon_differences.csv) | Exported Light-Dark differences and ratios by taxon. |
+| [Package versions](../photophysiology_homework_2026/outputs/package_versions.csv) | R package names and versions used in the analysis. |
