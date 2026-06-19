@@ -59,7 +59,7 @@ The R packages used were:
 
 ### Photosynthesis-Irradiance Curves
 
-![Photosynthesis-irradiance curves]({{ site.baseurl }}/photophysiology_homework_2026/figures/figure_1_pi_curves.png)
+![Photosynthesis-irradiance curves](../photophysiology_homework_2026/figures/figure_1_pi_curves.png)
 
 **Figure 1.** Photosynthesis-irradiance curves for retained Light and Dark samples. Points show observed ETR values and lines show fitted non-linear curves.
 
@@ -67,7 +67,7 @@ The R packages used were:
 
 The analysis fitted ETR/PAR curves for retained Light and Dark samples and extracted four parameters: `Am`, `AQY`, `Rd`, and `Ik`.
 
-![Parameter boxplots]({{ site.baseurl }}/photophysiology_homework_2026/figures/figure_2_parameter_boxplots.png)
+![Parameter boxplots](../photophysiology_homework_2026/figures/figure_2_parameter_boxplots.png)
 
 **Figure 2.** Fitted photophysiology parameters in Light and Dark groups. Points represent individual taxa/samples.
 
@@ -97,11 +97,11 @@ The taxa included in paired comparisons were Colpomenia, Dictyota, Galaxaura, Ja
 
 **Table 2.** Paired Wilcoxon tests comparing Light and Dark values for taxa represented in both groups.
 
-![Paired differences and ratios]({{ site.baseurl }}/photophysiology_homework_2026/figures/figure_3_paired_differences_ratios.png)
+![Paired differences and ratios](../photophysiology_homework_2026/figures/figure_3_paired_differences_ratios.png)
 
 **Figure 3.** Paired taxon comparison between Light and Dark groups. The top panels show absolute differences and the bottom panels show ratios.
 
-![Q-Q plots]({{ site.baseurl }}/photophysiology_homework_2026/figures/figure_4_qq_plots.png)
+![Q-Q plots](../photophysiology_homework_2026/figures/figure_4_qq_plots.png)
 
 **Figure 4.** Q-Q plots for fitted parameters.
 
@@ -119,11 +119,11 @@ The strongest limitations are the small and uneven sample set, the removal of tw
 
 The supporting files for this post are saved in `photophysiology_homework_2026/`:
 
-- [`photophysiology_homework_2026.Rmd`]({{ site.baseurl }}/photophysiology_homework_2026/photophysiology_homework_2026.Rmd): reproducible R analysis source.
-- [`photophysiology_parameters_tidy.csv`]({{ site.baseurl }}/photophysiology_homework_2026/outputs/photophysiology_parameters_tidy.csv): tidy parameter table in the requested format.
-- [`photophysiology_parameters_with_readme.xlsx`]({{ site.baseurl }}/photophysiology_homework_2026/outputs/photophysiology_parameters_with_readme.xlsx): Excel table with `Data` and `ReadMe` sheets.
-- [`photophysiology_homework_environment.RData`]({{ site.baseurl }}/photophysiology_homework_2026/outputs/photophysiology_homework_environment.RData): saved R environment.
-- [`photophysiology_summary_table.csv`]({{ site.baseurl }}/photophysiology_homework_2026/outputs/photophysiology_summary_table.csv): exported summary table.
-- [`paired_wilcoxon_tests.csv`]({{ site.baseurl }}/photophysiology_homework_2026/outputs/paired_wilcoxon_tests.csv): exported statistical test table.
-- [`paired_taxon_differences.csv`]({{ site.baseurl }}/photophysiology_homework_2026/outputs/paired_taxon_differences.csv): exported paired taxon differences and ratios.
-- [`package_versions.csv`]({{ site.baseurl }}/photophysiology_homework_2026/outputs/package_versions.csv): package names and versions.
+- [`photophysiology_homework_2026.Rmd`](../photophysiology_homework_2026/photophysiology_homework_2026.Rmd): reproducible R analysis source.
+- [`photophysiology_parameters_tidy.csv`](../photophysiology_homework_2026/outputs/photophysiology_parameters_tidy.csv): tidy parameter table in the requested format.
+- [`photophysiology_parameters_with_readme.xlsx`](../photophysiology_homework_2026/outputs/photophysiology_parameters_with_readme.xlsx): Excel table with `Data` and `ReadMe` sheets.
+- [`photophysiology_homework_environment.RData`](../photophysiology_homework_2026/outputs/photophysiology_homework_environment.RData): saved R environment.
+- [`photophysiology_summary_table.csv`](../photophysiology_homework_2026/outputs/photophysiology_summary_table.csv): exported summary table.
+- [`paired_wilcoxon_tests.csv`](../photophysiology_homework_2026/outputs/paired_wilcoxon_tests.csv): exported statistical test table.
+- [`paired_taxon_differences.csv`](../photophysiology_homework_2026/outputs/paired_taxon_differences.csv): exported paired taxon differences and ratios.
+- [`package_versions.csv`](../photophysiology_homework_2026/outputs/package_versions.csv): package names and versions.
