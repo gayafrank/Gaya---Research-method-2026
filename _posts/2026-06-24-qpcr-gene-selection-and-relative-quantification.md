@@ -126,23 +126,9 @@ The supporting files for this post are saved in `qpcr_homework_2026/`:
 | `outputs/qpcr_classwork_values.csv` | Full Ct, Delta Ct, Delta-Delta Ct, and fold-change table. |
 | `figures/figure_1_qpcr_fold_change.svg` | Fold-change graph used in this post. |
 
-## Assignment Coverage Checklist
-
-- [x] Selected an organism: *Chlorella vulgaris*.
-- [x] Selected at least two target genes: `HSP70` and `APX`.
-- [x] Selected one reference gene: `TUB` / beta-tubulin.
-- [x] Explained why each target gene was chosen.
-- [x] Described the known biological function of each gene.
-- [x] Stated the expected expression change for each target gene.
-- [x] Defined the planned treatment condition: acute high-light stress.
-- [x] Explained why each target gene is relevant to the treatment.
-- [x] Justified why the reference gene is expected to remain stable.
-- [x] Explained the Delta-Delta Ct method.
-- [x] Used the provided classwork data to calculate Delta Ct, Delta-Delta Ct, and fold change.
-- [x] Added a final fold-change graph and interpretation.
-
 ## References
 
-- Previous notebook organism context: [Primer Design and Phylogenetic Analysis of *Chlorella vulgaris*]({{ site.baseurl }}/primer-design-and-phylogenetic-analysis-of-chlorella-vulgaris-using-the-18s-rrna-its-region/)
-- Hsp70 background: [Hsp70 protein family](https://en.wikipedia.org/wiki/Hsp70)
-- APX background: [Ascorbate peroxidase](https://en.wikipedia.org/wiki/Ascorbate_peroxidase)
+- Previous notebook organism context: [Primer Design and Phylogenetic Analysis of *Chlorella vulgaris*]({{ site.baseurl }}/notebook/2026/05/11/chlorella-phylogenetic-primer-design-post.html)
+- Livak, K. J. and Schmittgen, T. D. 2001. Analysis of relative gene expression data using real-time quantitative PCR and the 2^-Delta Delta Ct method. [Methods](https://pubmed.ncbi.nlm.nih.gov/11846609/).
+- Tavaria, M., Gabriele, T., Kola, I., and Anderson, R. L. 1996. A hitchhiker's guide to the human Hsp70 family. [Cell Stress & Chaperones](https://pubmed.ncbi.nlm.nih.gov/9222585/).
+- Shigeoka, S., Ishikawa, T., Tamoi, M., Miyagawa, Y., Takeda, T., Yabuta, Y., and Yoshimura, K. 2002. Regulation and function of ascorbate peroxidase isoenzymes. [Journal of Experimental Botany](https://doi.org/10.1093/jexbot/53.372.1305).
