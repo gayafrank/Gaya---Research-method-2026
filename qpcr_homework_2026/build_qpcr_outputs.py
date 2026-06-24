@@ -96,7 +96,7 @@ def write_csv(rows):
 
 def write_svg(rows):
     FIGURES.mkdir(parents=True, exist_ok=True)
-    path = FIGURES / "figure_1_qpcr_fold_change.svg"
+    path = FIGURES / "figure_1_qpcr_fold_change_zero_baseline.svg"
 
     width = 1080
     height = 660

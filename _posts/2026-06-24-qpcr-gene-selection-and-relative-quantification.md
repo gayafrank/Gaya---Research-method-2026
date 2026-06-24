@@ -85,7 +85,7 @@ The `NGN` fold change is about 2.00, so `NGN` expression is approximately two ti
 
 ### Classwork Results
 
-![qPCR fold-change graph]({{ site.baseurl }}/qpcr_homework_2026/figures/figure_1_qpcr_fold_change.svg)
+![qPCR fold-change graph]({{ site.baseurl }}/qpcr_homework_2026/figures/figure_1_qpcr_fold_change_zero_baseline.svg)
 
 **Figure 1.** Relative gene expression in the inhibitor treatment compared with the DMSO control. Fold change was calculated as `2^(-Delta-Delta Ct)` after normalization to `Tubulin`. The dashed line at 1 marks no change relative to the DMSO control.
 
