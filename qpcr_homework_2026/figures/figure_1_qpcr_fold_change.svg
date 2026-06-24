@@ -3,7 +3,7 @@
 <desc id="desc">Bar chart of 2 to the negative delta delta Ct fold change values for fourteen genes.</desc>
 <rect width="1080" height="660" fill="#ffffff"/>
 <text x="92" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#222222">Relative expression after inhibitor treatment</text>
-<text x="92" y="64" font-family="Arial, sans-serif" font-size="14" fill="#555555">Fold change = 2^(-Delta Delta Ct), normalized to Tubulin and DMSO control</text>
+<text x="92" y="64" font-family="Arial, sans-serif" font-size="14" fill="#555555">Fold change = 2^(-Delta Delta Ct), normalized to Tubulin and DMSO control; line at 1 = no change</text>
 <line x1="92" y1="510.00" x2="1046" y2="510.00" stroke="#dddddd" stroke-width="1"/>
 <text x="80" y="515.00" text-anchor="end" font-family="Arial, sans-serif" font-size="13" fill="#555555">0</text>
 <line x1="92" y1="410.45" x2="1046" y2="410.45" stroke="#dddddd" stroke-width="1"/>
@@ -14,50 +14,52 @@
 <text x="80" y="216.36" text-anchor="end" font-family="Arial, sans-serif" font-size="13" fill="#555555">1.5</text>
 <line x1="92" y1="111.82" x2="1046" y2="111.82" stroke="#dddddd" stroke-width="1"/>
 <text x="80" y="116.82" text-anchor="end" font-family="Arial, sans-serif" font-size="13" fill="#555555">2</text>
-<line x1="92" y1="310.91" x2="1046" y2="310.91" stroke="#333333" stroke-width="1.5"/>
+<line x1="92" y1="510.00" x2="1046" y2="510.00" stroke="#333333" stroke-width="1.5"/>
+<line x1="92" y1="310.91" x2="1046" y2="310.91" stroke="#333333" stroke-width="1.5" stroke-dasharray="6 5"/>
+<text x="1046" y="302.91" text-anchor="end" font-family="Arial, sans-serif" font-size="13" fill="#333333">1 = no change</text>
 <text x="36" y="291.00" transform="rotate(-90 36,291.00)" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#333333">Fold change</text>
-<rect x="92.00" y="211.27" width="57.93" height="99.64" fill="#2f7d6d"/>
+<rect x="92.00" y="211.27" width="57.93" height="298.73" fill="#2f7d6d"/>
 <text x="120.96" y="203.27" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#222222">1.50</text>
 <text x="120.96" y="556" text-anchor="end" transform="rotate(-45 120.96,556)" font-family="Arial, sans-serif" font-size="13" fill="#333333">ascs</text>
-<rect x="160.93" y="242.58" width="57.93" height="68.33" fill="#2f7d6d"/>
+<rect x="160.93" y="242.58" width="57.93" height="267.42" fill="#2f7d6d"/>
 <text x="189.89" y="234.58" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#222222">1.34</text>
 <text x="189.89" y="556" text-anchor="end" transform="rotate(-45 189.89,556)" font-family="Arial, sans-serif" font-size="13" fill="#333333">Delta</text>
-<rect x="229.86" y="268.36" width="57.93" height="42.55" fill="#2f7d6d"/>
+<rect x="229.86" y="268.36" width="57.93" height="241.64" fill="#2f7d6d"/>
 <text x="258.82" y="260.36" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#222222">1.21</text>
 <text x="258.82" y="556" text-anchor="end" transform="rotate(-45 258.82,556)" font-family="Arial, sans-serif" font-size="13" fill="#333333">ets</text>
-<rect x="298.79" y="199.01" width="57.93" height="111.90" fill="#2f7d6d"/>
+<rect x="298.79" y="199.01" width="57.93" height="310.99" fill="#2f7d6d"/>
 <text x="327.75" y="191.01" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#222222">1.56</text>
 <text x="327.75" y="556" text-anchor="end" transform="rotate(-45 327.75,556)" font-family="Arial, sans-serif" font-size="13" fill="#333333">foxA</text>
-<rect x="367.71" y="285.07" width="57.93" height="25.84" fill="#2f7d6d"/>
+<rect x="367.71" y="285.07" width="57.93" height="224.93" fill="#2f7d6d"/>
 <text x="396.68" y="277.07" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#222222">1.13</text>
 <text x="396.68" y="556" text-anchor="end" transform="rotate(-45 396.68,556)" font-family="Arial, sans-serif" font-size="13" fill="#333333">gcm</text>
-<rect x="436.64" y="112.30" width="57.93" height="198.61" fill="#2f7d6d"/>
+<rect x="436.64" y="112.30" width="57.93" height="397.70" fill="#2f7d6d"/>
 <text x="465.61" y="104.30" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#222222">2.00</text>
 <text x="465.61" y="556" text-anchor="end" transform="rotate(-45 465.61,556)" font-family="Arial, sans-serif" font-size="13" fill="#333333">NGN</text>
-<rect x="505.57" y="386.40" width="57.93" height="-75.49" fill="#b25b43"/>
-<text x="534.54" y="332.91" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#222222">0.62</text>
+<rect x="505.57" y="386.40" width="57.93" height="123.60" fill="#b25b43"/>
+<text x="534.54" y="378.40" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#222222">0.62</text>
 <text x="534.54" y="556" text-anchor="end" transform="rotate(-45 534.54,556)" font-family="Arial, sans-serif" font-size="13" fill="#333333">opt</text>
-<rect x="574.50" y="294.99" width="57.93" height="15.92" fill="#2f7d6d"/>
+<rect x="574.50" y="294.99" width="57.93" height="215.01" fill="#2f7d6d"/>
 <text x="603.46" y="286.99" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#222222">1.08</text>
 <text x="603.46" y="556" text-anchor="end" transform="rotate(-45 603.46,556)" font-family="Arial, sans-serif" font-size="13" fill="#333333">pak3</text>
-<rect x="643.43" y="261.71" width="57.93" height="49.20" fill="#2f7d6d"/>
+<rect x="643.43" y="261.71" width="57.93" height="248.29" fill="#2f7d6d"/>
 <text x="672.39" y="253.71" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#222222">1.25</text>
 <text x="672.39" y="556" text-anchor="end" transform="rotate(-45 672.39,556)" font-family="Arial, sans-serif" font-size="13" fill="#333333">pak4</text>
-<rect x="712.36" y="461.79" width="57.93" height="-150.88" fill="#b25b43"/>
-<text x="741.32" y="332.91" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#222222">0.24</text>
+<rect x="712.36" y="461.79" width="57.93" height="48.21" fill="#b25b43"/>
+<text x="741.32" y="453.79" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#222222">0.24</text>
 <text x="741.32" y="556" text-anchor="end" transform="rotate(-45 741.32,556)" font-family="Arial, sans-serif" font-size="13" fill="#333333">pitx</text>
-<rect x="781.29" y="395.46" width="57.93" height="-84.55" fill="#b25b43"/>
-<text x="810.25" y="332.91" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#222222">0.58</text>
+<rect x="781.29" y="395.46" width="57.93" height="114.54" fill="#b25b43"/>
+<text x="810.25" y="387.46" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#222222">0.58</text>
 <text x="810.25" y="556" text-anchor="end" transform="rotate(-45 810.25,556)" font-family="Arial, sans-serif" font-size="13" fill="#333333">SM30</text>
-<rect x="850.21" y="417.80" width="57.93" height="-106.89" fill="#b25b43"/>
-<text x="879.18" y="332.91" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#222222">0.46</text>
+<rect x="850.21" y="417.80" width="57.93" height="92.20" fill="#b25b43"/>
+<text x="879.18" y="409.80" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#222222">0.46</text>
 <text x="879.18" y="556" text-anchor="end" transform="rotate(-45 879.18,556)" font-family="Arial, sans-serif" font-size="13" fill="#333333">sm50</text>
-<rect x="919.14" y="176.52" width="57.93" height="134.39" fill="#2f7d6d"/>
+<rect x="919.14" y="176.52" width="57.93" height="333.48" fill="#2f7d6d"/>
 <text x="948.11" y="168.52" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#222222">1.68</text>
 <text x="948.11" y="556" text-anchor="end" transform="rotate(-45 948.11,556)" font-family="Arial, sans-serif" font-size="13" fill="#333333">soxC</text>
-<rect x="988.07" y="301.48" width="57.93" height="9.43" fill="#2f7d6d"/>
+<rect x="988.07" y="301.48" width="57.93" height="208.52" fill="#2f7d6d"/>
 <text x="1017.04" y="293.48" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#222222">1.05</text>
 <text x="1017.04" y="556" text-anchor="end" transform="rotate(-45 1017.04,556)" font-family="Arial, sans-serif" font-size="13" fill="#333333">synB</text>
-<text x="92" y="606" font-family="Arial, sans-serif" font-size="13" fill="#555555">Green bars: expression higher than DMSO control. Brown bars: expression lower than DMSO control.</text>
+<text x="92" y="606" font-family="Arial, sans-serif" font-size="13" fill="#555555">Green bars: expression higher than DMSO control. Brown bars: expression lower than DMSO control. Dashed line: no change.</text>
 <text x="92" y="628" font-family="Arial, sans-serif" font-size="13" fill="#555555">Data source: Class_2026_Excercise_qPCR workbook.</text>
 </svg>

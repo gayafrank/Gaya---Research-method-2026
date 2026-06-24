@@ -87,7 +87,7 @@ The `NGN` fold change is about 2.00, so `NGN` expression is approximately two ti
 
 ![qPCR fold-change graph]({{ site.baseurl }}/qpcr_homework_2026/figures/figure_1_qpcr_fold_change.svg)
 
-**Figure 1.** Relative gene expression in the inhibitor treatment compared with the DMSO control. Fold change was calculated as `2^(-Delta-Delta Ct)` after normalization to `Tubulin`.
+**Figure 1.** Relative gene expression in the inhibitor treatment compared with the DMSO control. Fold change was calculated as `2^(-Delta-Delta Ct)` after normalization to `Tubulin`. The dashed line at 1 marks no change relative to the DMSO control.
 
 | Gene | Delta Ct control | Delta Ct treatment | Delta-Delta Ct | Fold change |
 |---|---:|---:|---:|---:|
@@ -115,16 +115,6 @@ Several genes showed lower relative expression in the inhibitor treatment. The s
 The genes with fold changes close to 1, such as `synB`, `pak3`, and `gcm`, changed only slightly between the DMSO control and inhibitor treatment. These genes show weaker evidence of treatment-related expression change in this classwork calculation.
 
 Overall, the Delta-Delta Ct analysis shows that the inhibitor treatment does not affect all genes equally. Some developmental or regulatory genes increase, some decrease, and some remain close to the control level. The biological interpretation would depend on what pathway the inhibitor affects and what developmental roles these genes have.
-
-## Supporting Files
-
-The supporting files for this post are saved in `qpcr_homework_2026/`:
-
-| File | Description |
-|---|---|
-| `build_qpcr_outputs.py` | Reproducible script used to calculate the classwork table and generate the figure. |
-| `outputs/qpcr_classwork_values.csv` | Full Ct, Delta Ct, Delta-Delta Ct, and fold-change table. |
-| `figures/figure_1_qpcr_fold_change.svg` | Fold-change graph used in this post. |
 
 ## References
 

@@ -107,7 +107,8 @@ def write_svg(rows):
     chart_w = width - margin_left - margin_right
     chart_h = height - margin_top - margin_bottom
     max_y = 2.2
-    baseline_y = margin_top + chart_h - (1.0 / max_y) * chart_h
+    zero_y = margin_top + chart_h
+    no_change_y = margin_top + chart_h - (1.0 / max_y) * chart_h
     bar_gap = 11
     bar_w = (chart_w - bar_gap * (len(rows) - 1)) / len(rows)
 
@@ -120,7 +121,7 @@ def write_svg(rows):
         '<desc id="desc">Bar chart of 2 to the negative delta delta Ct fold change values for fourteen genes.</desc>',
         '<rect width="1080" height="660" fill="#ffffff"/>',
         '<text x="92" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#222222">Relative expression after inhibitor treatment</text>',
-        '<text x="92" y="64" font-family="Arial, sans-serif" font-size="14" fill="#555555">Fold change = 2^(-Delta Delta Ct), normalized to Tubulin and DMSO control</text>',
+        '<text x="92" y="64" font-family="Arial, sans-serif" font-size="14" fill="#555555">Fold change = 2^(-Delta Delta Ct), normalized to Tubulin and DMSO control; line at 1 = no change</text>',
     ]
 
     for tick in [0, 0.5, 1.0, 1.5, 2.0]:
@@ -128,16 +129,18 @@ def write_svg(rows):
         parts.append(f'<line x1="{margin_left}" y1="{ty:.2f}" x2="{width - margin_right}" y2="{ty:.2f}" stroke="#dddddd" stroke-width="1"/>')
         parts.append(f'<text x="{margin_left - 12}" y="{ty + 5:.2f}" text-anchor="end" font-family="Arial, sans-serif" font-size="13" fill="#555555">{tick:g}</text>')
 
-    parts.append(f'<line x1="{margin_left}" y1="{baseline_y:.2f}" x2="{width - margin_right}" y2="{baseline_y:.2f}" stroke="#333333" stroke-width="1.5"/>')
+    parts.append(f'<line x1="{margin_left}" y1="{zero_y:.2f}" x2="{width - margin_right}" y2="{zero_y:.2f}" stroke="#333333" stroke-width="1.5"/>')
+    parts.append(f'<line x1="{margin_left}" y1="{no_change_y:.2f}" x2="{width - margin_right}" y2="{no_change_y:.2f}" stroke="#333333" stroke-width="1.5" stroke-dasharray="6 5"/>')
+    parts.append(f'<text x="{width - margin_right}" y="{no_change_y - 8:.2f}" text-anchor="end" font-family="Arial, sans-serif" font-size="13" fill="#333333">1 = no change</text>')
     parts.append(f'<text x="{margin_left - 56}" y="{margin_top + chart_h / 2:.2f}" transform="rotate(-90 {margin_left - 56},{margin_top + chart_h / 2:.2f})" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#333333">Fold change</text>')
 
     for i, row in enumerate(rows):
         value = row["fold_change"]
         x = margin_left + i * (bar_w + bar_gap)
         top = y(value)
-        bar_height = baseline_y - top
+        bar_height = zero_y - top
         color = "#2f7d6d" if value >= 1 else "#b25b43"
-        label_y = top - 8 if value >= 1 else baseline_y + 22
+        label_y = top - 8
         gene_label_y = height - margin_bottom + 46
         parts.append(f'<rect x="{x:.2f}" y="{top:.2f}" width="{bar_w:.2f}" height="{bar_height:.2f}" fill="{color}"/>')
         parts.append(f'<text x="{x + bar_w / 2:.2f}" y="{label_y:.2f}" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#222222">{value:.2f}</text>')
@@ -149,7 +152,7 @@ def write_svg(rows):
 
     parts.extend(
         [
-            f'<text x="{margin_left}" y="{height - 54}" font-family="Arial, sans-serif" font-size="13" fill="#555555">Green bars: expression higher than DMSO control. Brown bars: expression lower than DMSO control.</text>',
+            f'<text x="{margin_left}" y="{height - 54}" font-family="Arial, sans-serif" font-size="13" fill="#555555">Green bars: expression higher than DMSO control. Brown bars: expression lower than DMSO control. Dashed line: no change.</text>',
             f'<text x="{margin_left}" y="{height - 32}" font-family="Arial, sans-serif" font-size="13" fill="#555555">Data source: Class_2026_Excercise_qPCR workbook.</text>',
             "</svg>",
         ]
