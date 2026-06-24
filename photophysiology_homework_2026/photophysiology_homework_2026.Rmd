@@ -1,0 +1,485 @@
+---
+title: "Photophysiology Homework 2026"
+author: "Student"
+date: "`r format(Sys.Date(), '%Y-%m-%d')`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+  word_document:
+    toc: true
+    toc_depth: 2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  fig.width = 9,
+  fig.height = 5.5
+)
+
+required_packages <- c(
+  "dplyr", "tidyr", "lubridate", "hms", "ggplot2",
+  "purrr", "broom", "patchwork", "openxlsx", "knitr"
+)
+
+missing_packages <- required_packages[
+  !vapply(required_packages, requireNamespace, logical(1), quietly = TRUE)
+]
+
+if (length(missing_packages) > 0) {
+  stop(
+    "Missing packages: ",
+    paste(missing_packages, collapse = ", "),
+    ". Install them before rendering this report."
+  )
+}
+
+library(dplyr)
+library(tidyr)
+library(lubridate)
+library(hms)
+library(ggplot2)
+library(purrr)
+library(broom)
+library(patchwork)
+library(openxlsx)
+library(knitr)
+
+dir.create("outputs", showWarnings = FALSE)
+dir.create("figures", showWarnings = FALSE)
+```
+
+# Assignment Goal
+
+The assignment asks for an analysis of the photophysiology data. The required workflow is to extract the relevant photophysiology parameters, organize them in a tidy table similar to the example file, analyze them in R, export figures and tables, and write Materials and Methods, Results, and Interpretation sections.
+
+The data are PAM/FIRe-style fluorescence measurements from two protocols/groups, named here as `Light` and `Dark`. The analysis below uses the provided R example script as the base workflow and keeps all raw files unchanged.
+
+# Materials and Methods
+
+Photophysiology measurements were supplied as two raw semicolon-separated files: `light (1).csv` and `dark (1).csv`. Each file contains PAR steps and repeated fluorescence-derived measurements for multiple samples, including electron transport rate columns named `ETR1`, `ETR2`, and so on. Sample identities and taxa were assigned using `Photophysiology_metadata.csv`.
+
+The data were analyzed in R version `r getRversion()`. The workflow used the packages listed in Table 1. Dates and times were converted to R date/time classes, ETR measurements were reshaped from wide to long format, and sample metadata were joined by group and sample number. ETR values equal to zero at PAR values greater than zero were treated as missing values because the example script states that those values indicate that measurement had ended.
+
+Light samples `Light_3` and `Light_9` were removed because the example script identified them as curves that did not reach the expected response shape. No dark samples were removed after visual inspection. The taxon spelling `Galxaura` in the metadata was corrected to `Galaxaura` in the processed data only, so paired taxon comparisons could be matched correctly.
+
+For each sample, ETR was fitted as a function of PAR using the model from the example script:
+
+```{r model-formula, echo=FALSE, results='asis'}
+cat("`ETR = Am * ((AQY * PAR) / sqrt(Am^2 + (AQY * PAR)^2)) - Rd`")
+```
+
+The extracted parameters were:
+
+- `Am`: asymptotic maximum ETR, interpreted as maximum photosynthetic electron transport capacity.
+- `AQY`: initial slope of the curve, interpreted as apparent quantum yield or light-use efficiency.
+- `Rd`: fitted intercept/respiration-like parameter in ETR units.
+- `Ik`: saturation irradiance proxy, calculated as `Am / AQY`.
+
+Statistical comparison between Light and Dark used only taxa represented in both groups. Because the sample size is small, graphical inspection and biological effect size were prioritized. Paired Wilcoxon signed-rank tests were used for exploratory comparison and p-values were adjusted using the Benjamini-Hochberg method.
+
+```{r package-versions}
+package_versions <- data.frame(
+  Package = required_packages,
+  Version = vapply(required_packages, function(pkg) {
+    as.character(utils::packageVersion(pkg))
+  }, character(1))
+)
+
+kable(package_versions, caption = "Table 1. R packages used in the analysis.")
+write.csv(package_versions, "outputs/package_versions.csv", row.names = FALSE)
+```
+
+# Data Processing
+
+```{r load-data}
+metadata_raw <- read.csv("Photophysiology_metadata.csv", stringsAsFactors = FALSE)
+
+metadata <- metadata_raw %>%
+  mutate(
+    Taxon = recode(Taxon, Galxaura = "Galaxaura")
+  )
+
+read_pam_file <- function(file, group, etr_columns) {
+  raw_data <- read.csv(
+    file,
+    header = TRUE,
+    sep = ";",
+    check.names = FALSE,
+    stringsAsFactors = FALSE
+  )
+
+  raw_data$Date <- dmy(raw_data$Date)
+  raw_data$Time <- as_hms(raw_data$Time)
+
+  raw_data %>%
+    select(Date, Time, PAR, all_of(etr_columns)) %>%
+    pivot_longer(
+      cols = starts_with("ETR"),
+      names_to = "ETR_name",
+      values_to = "ETR"
+    ) %>%
+    mutate(
+      Group = group,
+      Sample = as.integer(gsub("ETR", "", ETR_name))
+    ) %>%
+    left_join(
+      metadata %>% filter(Group == group),
+      by = c("Group", "Sample")
+    ) %>%
+    mutate(
+      ETR = ifelse(ETR == 0 & PAR > 0, NA_real_, ETR)
+    )
+}
+
+light_etr <- read_pam_file("light (1).csv", "Light", paste0("ETR", 1:13))
+dark_etr <- read_pam_file("dark (1).csv", "Dark", paste0("ETR", 1:8))
+
+light_etr_filtered <- light_etr %>%
+  filter(!Sample_ID %in% c("Light_3", "Light_9"))
+
+dark_etr_filtered <- dark_etr
+
+etr_data <- bind_rows(light_etr_filtered, dark_etr_filtered)
+
+sample_audit <- etr_data %>%
+  distinct(Group, Sample_ID, Sample, Taxon) %>%
+  arrange(Group, Sample)
+
+kable(sample_audit, caption = "Table 2. Samples retained for curve fitting.")
+```
+
+# Curve Fitting
+
+```{r fit-curves}
+fit_pi_curve <- function(sample_data) {
+  sample_data <- sample_data %>%
+    filter(PAR < 600, !is.na(ETR))
+
+  fit <- nls(
+    ETR ~ (Am * ((AQY * PAR) / sqrt(Am^2 + (AQY * PAR)^2))) - Rd,
+    data = sample_data,
+    start = list(Am = 0.7, AQY = 0.001, Rd = 0.4),
+    control = nls.control(maxiter = 200, warnOnly = TRUE)
+  )
+
+  list(
+    parameters = tidy(fit) %>%
+      select(term, estimate) %>%
+      pivot_wider(names_from = term, values_from = estimate) %>%
+      mutate(Ik = Am / AQY),
+    augmented = augment(fit)
+  )
+}
+
+fit_results <- etr_data %>%
+  filter(PAR < 600, !is.na(ETR)) %>%
+  group_by(Group, Sample_ID, Sample, Taxon) %>%
+  nest() %>%
+  mutate(fit = map(data, fit_pi_curve))
+
+photo_parameters <- fit_results %>%
+  transmute(
+    Group,
+    Sample_ID,
+    Sample,
+    Taxon,
+    parameters = map(fit, "parameters")
+  ) %>%
+  unnest(parameters) %>%
+  ungroup()
+
+fitted_points <- fit_results %>%
+  transmute(
+    Group,
+    Sample_ID,
+    Sample,
+    Taxon,
+    augmented = map(fit, "augmented")
+  ) %>%
+  unnest(augmented) %>%
+  ungroup()
+
+kable(
+  photo_parameters %>% arrange(Group, Sample),
+  digits = 4,
+  caption = "Table 3. Fitted photophysiology parameters by sample."
+)
+```
+
+```{r export-parameters}
+parameter_table <- photo_parameters %>%
+  pivot_longer(
+    cols = c(Am, AQY, Rd, Ik),
+    names_to = "Parameter",
+    values_to = "Value"
+  ) %>%
+  transmute(
+    Sample_MO = Sample_ID,
+    Sample = Sample,
+    Taxon = Taxon,
+    Treatment = Group,
+    Protocol = "rapid_light_curve",
+    Parameter = Parameter,
+    Value = Value
+  ) %>%
+  arrange(Treatment, Sample, Parameter)
+
+readme_table <- data.frame(
+  Field = c(
+    "Sample_MO", "Sample", "Taxon", "Treatment", "Protocol",
+    "Parameter: Am", "Parameter: AQY", "Parameter: Rd", "Parameter: Ik"
+  ),
+  Meaning = c(
+    "Unique sample identifier from metadata.",
+    "Sample number matching the ETR column number in the raw PAM files.",
+    "Algal taxon assigned in the metadata file.",
+    "Photophysiology group/protocol label: Light or Dark.",
+    "Analysis protocol used to fit ETR as a function of PAR.",
+    "Asymptotic maximum ETR, in ETR units.",
+    "Initial curve slope, in ETR per PAR.",
+    "Fitted intercept/respiration-like parameter, in ETR units.",
+    "Saturation irradiance proxy calculated as Am/AQY, in PAR units."
+  )
+)
+
+write.csv(parameter_table, "outputs/photophysiology_parameters_tidy.csv", row.names = FALSE)
+
+workbook <- createWorkbook()
+addWorksheet(workbook, "Data")
+addWorksheet(workbook, "ReadMe")
+writeData(workbook, "Data", parameter_table)
+writeData(workbook, "ReadMe", readme_table)
+saveWorkbook(
+  workbook,
+  "outputs/photophysiology_parameters_with_readme.xlsx",
+  overwrite = TRUE
+)
+
+kable(
+  head(parameter_table, 12),
+  digits = 4,
+  caption = "Table 4. Preview of the exported tidy parameter table."
+)
+```
+
+# Results
+
+## Photosynthesis-Irradiance Curves
+
+```{r pi-curves}
+plot_pi_curves <- function(group_name) {
+  fitted_points %>%
+    filter(Group == group_name) %>%
+    ggplot(aes(x = PAR, y = ETR, color = Taxon)) +
+    geom_point(size = 1.8, alpha = 0.8) +
+    geom_line(aes(y = .fitted, group = Sample_ID), linewidth = 0.8) +
+    labs(
+      title = paste(group_name, "group"),
+      x = "PAR (umol photons m^-2 s^-1)",
+      y = "ETR",
+      color = "Taxon"
+    ) +
+    ylim(0, 50) +
+    theme_classic()
+}
+
+pi_light <- plot_pi_curves("Light")
+pi_dark <- plot_pi_curves("Dark")
+pi_combined <- pi_light + pi_dark
+
+ggsave("figures/figure_1_pi_curves.png", pi_combined, width = 12, height = 5.5, dpi = 300)
+
+pi_combined
+```
+
+**Figure 1.** Photosynthesis-irradiance curves for retained Light and Dark samples. Points show observed ETR values and lines show fitted non-linear curves.
+
+## Parameter Summary
+
+```{r summary-table}
+parameter_long <- photo_parameters %>%
+  pivot_longer(
+    cols = c(Am, AQY, Rd, Ik),
+    names_to = "Photo_parameter",
+    values_to = "Value"
+  )
+
+summary_table <- parameter_long %>%
+  group_by(Photo_parameter, Group) %>%
+  summarise(
+    n = sum(!is.na(Value)),
+    mean = mean(Value, na.rm = TRUE),
+    sd = sd(Value, na.rm = TRUE),
+    min = min(Value, na.rm = TRUE),
+    q25 = quantile(Value, 0.25, na.rm = TRUE),
+    median = median(Value, na.rm = TRUE),
+    q75 = quantile(Value, 0.75, na.rm = TRUE),
+    max = max(Value, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+write.csv(summary_table, "outputs/photophysiology_summary_table.csv", row.names = FALSE)
+
+kable(
+  summary_table,
+  digits = 4,
+  caption = "Table 5. Summary statistics for fitted parameters by group."
+)
+```
+
+```{r parameter-plots}
+parameter_boxplot <- ggplot(parameter_long, aes(x = Group, y = Value)) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_point(aes(color = Taxon), size = 2, position = position_jitter(width = 0.15)) +
+  facet_wrap(~Photo_parameter, scales = "free") +
+  labs(
+    title = "Fitted photophysiology parameters by group",
+    x = "Group",
+    y = "Parameter value",
+    color = "Taxon"
+  ) +
+  theme_bw()
+
+ggsave("figures/figure_2_parameter_boxplots.png", parameter_boxplot, width = 9, height = 6, dpi = 300)
+
+parameter_boxplot
+```
+
+**Figure 2.** Distribution of fitted photophysiology parameters in Light and Dark groups. Points represent individual taxa/samples.
+
+## Paired Light-Dark Comparison
+
+```{r paired-comparison}
+paired_parameters <- parameter_long %>%
+  group_by(Taxon) %>%
+  filter(n_distinct(Group) == 2) %>%
+  ungroup()
+
+paired_taxa <- paired_parameters %>%
+  distinct(Taxon) %>%
+  arrange(Taxon)
+
+kable(paired_taxa, caption = "Table 6. Taxa included in paired Light-Dark comparisons.")
+
+difference_by_taxon <- paired_parameters %>%
+  group_by(Taxon, Photo_parameter, Group) %>%
+  summarise(Value = mean(Value, na.rm = TRUE), .groups = "drop") %>%
+  pivot_wider(names_from = Group, values_from = Value) %>%
+  mutate(
+    Difference = Light - Dark,
+    Ratio = Light / Dark
+  )
+
+write.csv(difference_by_taxon, "outputs/paired_taxon_differences.csv", row.names = FALSE)
+
+paired_tests <- paired_parameters %>%
+  select(Taxon, Group, Photo_parameter, Value) %>%
+  pivot_wider(names_from = Group, values_from = Value) %>%
+  group_by(Photo_parameter) %>%
+  summarise(
+    p_value = wilcox.test(Light, Dark, paired = TRUE, exact = FALSE)$p.value,
+    .groups = "drop"
+  ) %>%
+  mutate(
+    p_adjusted_BH = p.adjust(p_value, method = "BH")
+  )
+
+write.csv(paired_tests, "outputs/paired_wilcoxon_tests.csv", row.names = FALSE)
+
+kable(
+  paired_tests,
+  digits = 4,
+  caption = "Table 7. Paired Wilcoxon tests comparing Light and Dark for paired taxa."
+)
+```
+
+```{r difference-ratio-plots}
+difference_plot <- ggplot(difference_by_taxon, aes(x = Taxon, y = Difference, fill = Taxon)) +
+  geom_col() +
+  facet_wrap(~Photo_parameter, scales = "free_y") +
+  labs(
+    title = "Light minus Dark parameter differences",
+    x = "Taxon",
+    y = "Light - Dark"
+  ) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position = "none")
+
+ratio_plot <- ggplot(difference_by_taxon, aes(x = Taxon, y = Ratio, fill = Taxon)) +
+  geom_col() +
+  geom_hline(yintercept = 1, linetype = "dashed", color = "red") +
+  facet_wrap(~Photo_parameter, scales = "free_y") +
+  labs(
+    title = "Light to Dark parameter ratios",
+    x = "Taxon",
+    y = "Light / Dark"
+  ) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), legend.position = "none")
+
+combined_difference_plot <- difference_plot / ratio_plot
+
+ggsave(
+  "figures/figure_3_paired_differences_ratios.png",
+  combined_difference_plot,
+  width = 10,
+  height = 9,
+  dpi = 300
+)
+
+combined_difference_plot
+```
+
+**Figure 3.** Paired taxon comparison between Light and Dark groups. The top panels show absolute differences and the bottom panels show ratios. A ratio of 1 indicates no difference between groups.
+
+```{r qq-plots}
+qq_plot <- ggplot(parameter_long, aes(sample = Value, color = Group)) +
+  stat_qq() +
+  stat_qq_line() +
+  facet_wrap(~Photo_parameter, scales = "free") +
+  labs(
+    title = "Q-Q plots of fitted parameters",
+    x = "Theoretical quantile",
+    y = "Observed value",
+    color = "Group"
+  ) +
+  theme_bw()
+
+ggsave("figures/figure_4_qq_plots.png", qq_plot, width = 9, height = 6, dpi = 300)
+
+qq_plot
+```
+
+**Figure 4.** Q-Q plots for fitted parameters. With the small sample size, these plots are used for visual assessment rather than strong distributional claims.
+
+# Interpretation
+
+The fitted curves produced interpretable parameter estimates for 11 Light samples and 8 Dark samples after removing two problematic Light curves. Seven taxa were available in both groups and were used for paired Light-Dark comparison: `r paste(paired_taxa$Taxon, collapse = ", ")`.
+
+Across paired taxa, the Wilcoxon tests did not produce Benjamini-Hochberg adjusted p-values below 0.05 for `Am`, `AQY`, `Rd`, or `Ik`. Therefore, the analysis does not provide strong statistical evidence for a consistent Light-Dark difference in the fitted parameters. However, because the sample size is small, this should not be interpreted as proof that no biological differences exist. The plots show that some taxa have large taxon-specific differences, so the biological pattern is better described from the effect sizes, paired differences, and curve shapes than from p-values alone.
+
+The strongest limitation is the small and uneven sample set. The Light group initially had more samples than the Dark group, two Light samples were excluded because of poor curve shape, and only taxa present in both groups could be used for paired comparison. The results should therefore be interpreted as exploratory evidence for photophysiological differences among sampled algae rather than as a high-power statistical test.
+
+# Output Files
+
+The analysis created the following files:
+
+- `outputs/photophysiology_parameters_tidy.csv`
+- `outputs/photophysiology_parameters_with_readme.xlsx`
+- `outputs/photophysiology_summary_table.csv`
+- `outputs/paired_taxon_differences.csv`
+- `outputs/paired_wilcoxon_tests.csv`
+- `outputs/package_versions.csv`
+- `figures/figure_1_pi_curves.png`
+- `figures/figure_2_parameter_boxplots.png`
+- `figures/figure_3_paired_differences_ratios.png`
+- `figures/figure_4_qq_plots.png`
+
+```{r save-environment, include=FALSE}
+save.image("outputs/photophysiology_homework_environment.RData")
+```
