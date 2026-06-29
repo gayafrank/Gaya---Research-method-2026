@@ -10,18 +10,18 @@ This post reports a photophysiology exercise from the Research Methods course. F
 
 ## Aim
 
-The aim was to compare photophysiological performance of algae assigned to two habitat/light-environment groups, `Light` and `Dark`, and to evaluate whether the available class data provide evidence for differences in photosynthetic response between these groups.
+The aim was to compare photophysiological performance of algae assigned to two groups, `Light` and `Dark`, and to evaluate whether the available class data provide preliminary evidence for differences in photosynthetic response between these groups. Following the clarified instructions, these groups are treated as proxies for habitat/light environment.
 
 Because the dataset is small and uneven among taxa, the results are interpreted as preliminary evidence that can guide a better follow-up experiment rather than as a definitive test of habitat effects.
 
 ## Experimental Design
 
-The design was a preliminary comparative experiment/observational exercise. Algal specimens were divided into two groups:
+The design was a preliminary comparative exercise. Algal specimens were divided into two groups in the supplied metadata:
 
-- `Light`: specimens assigned to the light-exposed group.
-- `Dark`: specimens assigned to the dark/shaded group.
+- `Light`: specimens assigned to the Light group.
+- `Dark`: specimens assigned to the Dark group.
 
-The raw data include 13 Light specimens and 8 Dark specimens. Specimens were identified to algal taxon and recorded in the metadata table. Several taxa were represented in both groups, allowing paired taxon-level comparison between Light and Dark. Other taxa were present in only one group and were included in descriptive plots and summary tables but not in paired tests.
+The raw data include 13 Light specimens and 8 Dark specimens. Specimens were recorded by algal taxon in the metadata table. Several taxa were represented in both groups, allowing paired taxon-level comparison between Light and Dark. Other taxa were present in only one group and were included in descriptive plots and summary tables but not in paired tests.
 
 The raw photophysiology measurements were recorded on 16 April 2026. The exact field site, GPS coordinates, collection depth/height on shore, transport time, transport temperature, and species-identification key were not included in the data files supplied for this exercise. Therefore, those details should be added from the original field notebook if the exercise is later converted into a fully replicable experiment.
 
@@ -29,7 +29,7 @@ The raw photophysiology measurements were recorded on 16 April 2026. The exact f
 
 ### Specimen Collection and Identification
 
-The submitted data package contains two photophysiology measurement files and one metadata file. The metadata file lists the experimental group, sample number, algal taxon, and sample ID for each specimen. Taxa were identified morphologically during the course exercise and recorded in the metadata. The identification level is the taxon name supplied in the course metadata, and no molecular confirmation was performed.
+The submitted data package contains two photophysiology measurement files and one metadata file. The metadata file lists the experimental group, sample number, algal taxon, and sample ID for each specimen. The method used to identify the algal taxa was not included in the supplied files, so this report uses the taxon names as provided in the course metadata.
 
 The metadata contained one spelling inconsistency: `Galxaura` in the Dark group and `Galaxaura` in the Light group. For the paired analysis, this was treated as the same taxon and corrected to `Galaxaura` in the processed analysis table. The raw metadata file is kept unchanged.
 
@@ -70,7 +70,7 @@ Photophysiology data were supplied as two semicolon-separated files:
 
 Each file contains the measurement date, measurement time, PAR level, fluorescence variables, and ETR columns for each specimen. The Light file contains `ETR1` to `ETR13`; the Dark file contains `ETR1` to `ETR8`.
 
-Measurements were performed as rapid light-response curves. PAR increased stepwise from 0 upward, and ETR was recorded for each specimen at each PAR step. The analysis used the ETR columns because the course script defines them as the relevant values for fitting photosynthesis-irradiance curves.
+Measurements were supplied as light-response measurements. PAR increased stepwise from 0 upward, and ETR was recorded for each specimen at each PAR step. The analysis used the ETR columns because the course script defines them as the relevant values for fitting photosynthesis-irradiance curves.
 
 ETR values equal to zero when PAR was greater than zero were treated as missing values, because the course script states that these values indicate that the measurement for that specimen had ended.
 
@@ -190,9 +190,9 @@ The taxa included in paired comparisons were Colpomenia, Dictyota, Galaxaura, Ja
 
 The fitted curves produced interpretable parameter estimates for 11 Light specimens and 8 Dark specimens after two problematic Light curves were removed. The paired tests did not produce Benjamini-Hochberg adjusted p-values below 0.05 for `Am`, `AQY`, `Rd`, or `Ik`. Therefore, the available data do not provide strong statistical evidence for a consistent difference between Light and Dark groups.
 
-This does not mean that habitat/light exposure has no biological effect. The sample size is small, the design is uneven among taxa, and some taxa show large taxon-specific differences in the paired difference and ratio plots. For example, Dictyota showed higher fitted `Am` and `Ik` in the Light group than in the Dark group, while Colpomenia showed lower fitted `Am` in the Light group than in the Dark group. This suggests that taxon identity may interact with habitat/light environment.
+This does not mean that habitat/light exposure has no biological effect. The sample size is small, the design is uneven among taxa, and some taxa show large taxon-specific differences in the paired difference and ratio plots. For example, Dictyota showed higher fitted `Am` and `Ik` in the Light group than in the Dark group, while Colpomenia showed lower fitted `Am` in the Light group than in the Dark group. This suggests that taxon identity should be controlled in a follow-up experiment.
 
-The main conclusion is that these data are useful as preliminary results, but not as a strong final test of habitat effects. A better follow-up experiment should use a balanced design with the same taxa sampled from replicated light-exposed and shaded habitats, with the same number of specimens per taxon and habitat. The field site, shore height or depth, collection time, transport conditions, acclimation time, and species-identification method should be recorded explicitly. This would make it possible to separate habitat effects from taxon-specific differences and sampling imbalance.
+The main conclusion is that these data are useful as preliminary results, but not as a strong final test of habitat effects. A better follow-up experiment should use a balanced design with the same taxa sampled from replicated habitat/light environments, with the same number of specimens per taxon and habitat. The field site, shore height or depth, collection time, transport conditions, acclimation time, and species-identification method should be recorded explicitly. This would make it possible to separate habitat effects from taxon-specific differences and sampling imbalance.
 
 ## Supporting Files
 
