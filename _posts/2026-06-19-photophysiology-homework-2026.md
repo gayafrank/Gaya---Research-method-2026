@@ -6,11 +6,11 @@ categories: Analysis
 tags: photophysiology R algae fluorescence
 ---
 
-This post reports a photophysiology exercise from the Research Methods course. Following the clarified instructions, the exercise is treated as preliminary results for testing how habitat/light environment may affect algal photophysiology.
+This post reports a photophysiology exercise from the Research Methods course. The exercise is treated as preliminary results for testing how habitat/light environment may affect algal photophysiology.
 
 ## Aim
 
-The aim was to compare photophysiological performance of algae assigned to two groups, `Light` and `Dark`, and to evaluate whether the available class data provide preliminary evidence for differences in photosynthetic response between these groups. Following the clarified instructions, these groups are treated as proxies for habitat/light environment.
+The aim was to compare photophysiological performance of algae assigned to two groups, `Light` and `Dark`, and to evaluate whether the available class data provide preliminary evidence for differences in photosynthetic response between these groups. These groups are treated as proxies for habitat/light environment.
 
 Because the dataset is small and uneven among taxa, the results are interpreted as preliminary evidence that can guide a better follow-up experiment rather than as a definitive test of habitat effects.
 
@@ -116,7 +116,7 @@ The R packages used were:
 
 ### Photosynthesis-Irradiance Curves
 
-![Photosynthesis-irradiance curves](../photophysiology_homework_2026/figures/figure_1_pi_curves.png)
+![Photosynthesis-irradiance curves](https://raw.githubusercontent.com/gayafrank/Gaya---Research-method-2026/main/photophysiology_homework_2026/figures/figure_1_pi_curves.png)
 
 **Figure 1.** Photosynthesis-irradiance curves for retained Light and Dark specimens. Points show observed ETR values and lines show fitted non-linear curves.
 
@@ -148,7 +148,7 @@ The R packages used were:
 
 ### Summary of Fitted Parameters
 
-![Parameter boxplots](../photophysiology_homework_2026/figures/figure_2_parameter_boxplots.png)
+![Parameter boxplots](https://raw.githubusercontent.com/gayafrank/Gaya---Research-method-2026/main/photophysiology_homework_2026/figures/figure_2_parameter_boxplots.png)
 
 **Figure 2.** Fitted photophysiology parameters in Light and Dark groups. Points represent individual taxa/specimens.
 
@@ -178,11 +178,11 @@ The taxa included in paired comparisons were Colpomenia, Dictyota, Galaxaura, Ja
 
 **Table 5.** Paired Wilcoxon tests comparing Light and Dark values for taxa represented in both groups.
 
-![Paired differences and ratios](../photophysiology_homework_2026/figures/figure_3_paired_differences_ratios.png)
+![Paired differences and ratios](https://raw.githubusercontent.com/gayafrank/Gaya---Research-method-2026/main/photophysiology_homework_2026/figures/figure_3_paired_differences_ratios.png)
 
 **Figure 3.** Paired taxon comparison between Light and Dark groups. The top panels show absolute differences and the bottom panels show ratios. A ratio of 1 indicates no difference between groups.
 
-![Q-Q plots](../photophysiology_homework_2026/figures/figure_4_qq_plots.png)
+![Q-Q plots](https://raw.githubusercontent.com/gayafrank/Gaya---Research-method-2026/main/photophysiology_homework_2026/figures/figure_4_qq_plots.png)
 
 **Figure 4.** Q-Q plots for fitted parameters. With the small sample size, these plots are used for visual assessment rather than strong distributional claims.
 
