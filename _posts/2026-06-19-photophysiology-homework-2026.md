@@ -1,35 +1,90 @@
 ---
 layout: post
-title: "Photophysiology Homework 2026"
-date: 2026-06-19
-categories: notebook
+title: Photophysiology Homework 2026
+date: '2026-06-19'
+categories: Analysis
 tags: photophysiology R algae fluorescence
 ---
 
-This post documents the photophysiology homework analysis for the research methods course.
+This post reports a photophysiology exercise from the Research Methods course. Following the clarified instructions, the exercise is treated as preliminary results for testing how habitat/light environment may affect algal photophysiology.
 
-## Assignment Goal
+## Aim
 
-The assignment was to analyze the photophysiology data, extract the relevant parameters, organize the results in a tidy format similar to `Mock_Photophysiology_2026.csv`, export tables and figures, and write Materials and Methods, Results, and Interpretation sections.
+The aim was to compare photophysiological performance of algae assigned to two habitat/light-environment groups, `Light` and `Dark`, and to evaluate whether the available class data provide evidence for differences in photosynthetic response between these groups.
 
-The raw photophysiology data were provided as two PAM/FIRe-style fluorescence files:
+Because the dataset is small and uneven among taxa, the results are interpreted as preliminary evidence that can guide a better follow-up experiment rather than as a definitive test of habitat effects.
 
-- `light (1).csv`
-- `dark (1).csv`
+## Experimental Design
 
-Sample identities and taxa were assigned using `Photophysiology_metadata.csv`.
+The design was a preliminary comparative experiment/observational exercise. Algal specimens were divided into two groups:
+
+- `Light`: specimens assigned to the light-exposed group.
+- `Dark`: specimens assigned to the dark/shaded group.
+
+The raw data include 13 Light specimens and 8 Dark specimens. Specimens were identified to algal taxon and recorded in the metadata table. Several taxa were represented in both groups, allowing paired taxon-level comparison between Light and Dark. Other taxa were present in only one group and were included in descriptive plots and summary tables but not in paired tests.
+
+The raw photophysiology measurements were recorded on 16 April 2026. The exact field site, GPS coordinates, collection depth/height on shore, transport time, transport temperature, and species-identification key were not included in the data files supplied for this exercise. Therefore, those details should be added from the original field notebook if the exercise is later converted into a fully replicable experiment.
 
 ## Materials and Methods
 
-The data were analyzed in R. The workflow followed the provided example script and used the Light and Dark photophysiology datasets. The raw measurements were recorded on 16 April 2026 according to the date column in the raw files. Each raw file contained PAR steps and fluorescence-derived electron transport rate measurements for multiple samples. ETR columns were reshaped from wide format into long format, then joined with sample metadata.
+### Specimen Collection and Identification
 
-ETR values equal to zero at PAR values greater than zero were treated as missing values, because the course script explains that these values indicate that a measurement had ended. Light samples `Light_3` and `Light_9` were removed because the provided script identified them as curves that did not reach the expected response shape. No dark samples were removed. The metadata spelling `Galxaura` was corrected to `Galaxaura` in the processed data so paired taxon comparisons could be matched correctly.
+The submitted data package contains two photophysiology measurement files and one metadata file. The metadata file lists the experimental group, sample number, algal taxon, and sample ID for each specimen. Taxa were identified morphologically during the course exercise and recorded in the metadata. The identification level is the taxon name supplied in the course metadata, and no molecular confirmation was performed.
 
-For each sample, ETR was fitted as a function of PAR using the model from the course script:
+The metadata contained one spelling inconsistency: `Galxaura` in the Dark group and `Galaxaura` in the Light group. For the paired analysis, this was treated as the same taxon and corrected to `Galaxaura` in the processed analysis table. The raw metadata file is kept unchanged.
+
+### Specimen Metadata
+
+| Group | Sample | Taxon | Sample ID |
+|---|---:|---|---|
+| Dark | 1 | Colpomenia | Dark_1 |
+| Dark | 2 | Dictyota | Dark_2 |
+| Dark | 8 | Galxaura | Dark_8 |
+| Dark | 5 | Jania | Dark_5 |
+| Dark | 4 | Padina | Dark_4 |
+| Dark | 6 | Red UNK | Dark_6 |
+| Dark | 3 | Sargassum | Dark_3 |
+| Dark | 7 | Ulva | Dark_7 |
+| Light | 8 | Cistosera | Light_8 |
+| Light | 12 | Colpomenia | Light_12 |
+| Light | 6 | Cudiom | Light_6 |
+| Light | 11 | Dictyota | Light_11 |
+| Light | 10 | Galaxaura | Light_10 |
+| Light | 2 | Halopteris | Light_2 |
+| Light | 5 | Hypnea | Light_5 |
+| Light | 1 | Jania | Light_1 |
+| Light | 3 | Namaliun | Light_3 |
+| Light | 7 | Padina | Light_7 |
+| Light | 4 | Sargassum | Light_4 |
+| Light | 9 | Ulva | Light_9 |
+| Light | 13 | Ulva | Light_13 |
+
+**Table 1.** Specimen metadata supplied for the photophysiology exercise. The table links the raw ETR column number to the taxon and sample ID used in the analysis.
+
+### Photophysiology Measurements
+
+Photophysiology data were supplied as two semicolon-separated files:
+
+- `data/light.csv`
+- `data/dark.csv`
+
+Each file contains the measurement date, measurement time, PAR level, fluorescence variables, and ETR columns for each specimen. The Light file contains `ETR1` to `ETR13`; the Dark file contains `ETR1` to `ETR8`.
+
+Measurements were performed as rapid light-response curves. PAR increased stepwise from 0 upward, and ETR was recorded for each specimen at each PAR step. The analysis used the ETR columns because the course script defines them as the relevant values for fitting photosynthesis-irradiance curves.
+
+ETR values equal to zero when PAR was greater than zero were treated as missing values, because the course script states that these values indicate that the measurement for that specimen had ended.
+
+### Data Processing and Curve Fitting
+
+The analysis was performed in R using the reproducible script `photophysiology_homework_2026.Rmd`. The raw Light and Dark files were read into R, date and time columns were converted to date/time objects, and ETR columns were reshaped from wide format to long format. Metadata were joined by group and sample number.
+
+Light samples `Light_3` and `Light_9` were removed before curve fitting because the course script identified them as curves that did not reach the expected response shape. No Dark samples were removed.
+
+For each retained specimen, ETR was fitted as a function of PAR using the non-linear model from the class script:
 
 `ETR = Am * ((AQY * PAR) / sqrt(Am^2 + (AQY * PAR)^2)) - Rd`
 
-The extracted parameters were:
+The extracted and calculated parameters were:
 
 | Parameter | Meaning |
 |---|---|
@@ -38,7 +93,7 @@ The extracted parameters were:
 | `Rd` | Fitted intercept/respiration-like parameter in ETR units. |
 | `Ik` | Saturation irradiance proxy, calculated as `Am / AQY`. |
 
-Only taxa represented in both Light and Dark groups were used for paired Light-Dark comparison. Because sample size was small, plots and effect sizes were emphasized. Paired Wilcoxon signed-rank tests were used as exploratory tests, and p-values were adjusted with the Benjamini-Hochberg method.
+Only taxa represented in both Light and Dark groups were used for paired Light-Dark comparison. Paired Wilcoxon signed-rank tests were used as exploratory tests, and p-values were adjusted using the Benjamini-Hochberg method. Because sample size was small, effect sizes and plots were interpreted together with p-values.
 
 The R packages used were:
 
@@ -55,21 +110,47 @@ The R packages used were:
 | openxlsx | 4.2.8.1 |
 | knitr | 1.51 |
 
+**Table 2.** R packages used for data manipulation, curve fitting, plotting, and exporting results.
+
 ## Results
 
 ### Photosynthesis-Irradiance Curves
 
-![Photosynthesis-irradiance curves]({{ site.baseurl }}/photophysiology_homework_2026/figures/figure_1_pi_curves.png)
+![Photosynthesis-irradiance curves](../photophysiology_homework_2026/figures/figure_1_pi_curves.png)
 
-**Figure 1.** Photosynthesis-irradiance curves for retained Light and Dark samples. Points show observed ETR values and lines show fitted non-linear curves.
+**Figure 1.** Photosynthesis-irradiance curves for retained Light and Dark specimens. Points show observed ETR values and lines show fitted non-linear curves.
+
+### Calculated Photophysiology Measurements
+
+| Sample ID | Sample | Taxon | Group | Am | AQY | Rd | Ik |
+|---|---:|---|---|---:|---:|---:|---:|
+| Dark_1 | 1 | Colpomenia | Dark | 33.960 | 0.2076 | -0.345 | 163.6 |
+| Dark_2 | 2 | Dictyota | Dark | 12.813 | 0.3079 | 0.252 | 41.6 |
+| Dark_3 | 3 | Sargassum | Dark | 5.982 | 0.2410 | 0.018 | 24.8 |
+| Dark_4 | 4 | Padina | Dark | 40.569 | 0.2150 | 0.087 | 188.6 |
+| Dark_5 | 5 | Jania | Dark | 8.783 | 0.0679 | -0.144 | 129.3 |
+| Dark_6 | 6 | Red UNK | Dark | 8.071 | 0.2015 | 0.077 | 40.1 |
+| Dark_7 | 7 | Ulva | Dark | 17.600 | 0.1446 | 0.238 | 121.7 |
+| Dark_8 | 8 | Galaxaura | Dark | 16.855 | 0.1345 | -0.428 | 125.3 |
+| Light_1 | 1 | Jania | Light | 33.253 | 0.1241 | -0.392 | 267.9 |
+| Light_2 | 2 | Halopteris | Light | 6.483 | 0.1138 | -0.074 | 57.0 |
+| Light_4 | 4 | Sargassum | Light | 30.126 | 0.1530 | -0.670 | 196.9 |
+| Light_5 | 5 | Hypnea | Light | 23.410 | 0.1635 | 0.054 | 143.2 |
+| Light_6 | 6 | Cudiom | Light | 8.827 | 0.1394 | 0.136 | 63.3 |
+| Light_7 | 7 | Padina | Light | 47.082 | 0.1841 | -0.557 | 255.7 |
+| Light_8 | 8 | Cistosera | Light | 13.887 | 0.1422 | -0.030 | 97.7 |
+| Light_10 | 10 | Galaxaura | Light | 7.948 | 0.1224 | -0.121 | 65.0 |
+| Light_11 | 11 | Dictyota | Light | 31.169 | 0.1391 | 0.054 | 224.1 |
+| Light_12 | 12 | Colpomenia | Light | 16.828 | 0.1228 | -0.136 | 137.1 |
+| Light_13 | 13 | Ulva | Light | 17.731 | 0.0986 | -0.085 | 179.8 |
+
+**Table 3.** Calculated photophysiology parameters extracted from the fitted photosynthesis-irradiance curves. `Ik` was calculated as `Am/AQY`.
 
 ### Summary of Fitted Parameters
 
-The analysis fitted ETR/PAR curves for retained Light and Dark samples and extracted four parameters: `Am`, `AQY`, `Rd`, and `Ik`.
+![Parameter boxplots](../photophysiology_homework_2026/figures/figure_2_parameter_boxplots.png)
 
-![Parameter boxplots]({{ site.baseurl }}/photophysiology_homework_2026/figures/figure_2_parameter_boxplots.png)
-
-**Figure 2.** Fitted photophysiology parameters in Light and Dark groups. Points represent individual taxa/samples.
+**Figure 2.** Fitted photophysiology parameters in Light and Dark groups. Points represent individual taxa/specimens.
 
 | Parameter | Group | n | Mean | SD | Min | Q25 | Median | Q75 | Max |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -82,7 +163,7 @@ The analysis fitted ETR/PAR curves for retained Light and Dark samples and extra
 | Rd | Dark | 8 | -0.0307 | 0.2531 | -0.4277 | -0.1942 | 0.0475 | 0.1244 | 0.2516 |
 | Rd | Light | 11 | -0.1655 | 0.2613 | -0.6701 | -0.2639 | -0.0854 | 0.0122 | 0.1361 |
 
-**Table 1.** Summary statistics for fitted photophysiology parameters by group.
+**Table 4.** Summary statistics for fitted photophysiology parameters by group.
 
 ### Paired Light-Dark Comparison
 
@@ -95,35 +176,36 @@ The taxa included in paired comparisons were Colpomenia, Dictyota, Galaxaura, Ja
 | Ik | 0.1083 | 0.2166 |
 | Rd | 0.2049 | 0.2719 |
 
-**Table 2.** Paired Wilcoxon tests comparing Light and Dark values for taxa represented in both groups.
+**Table 5.** Paired Wilcoxon tests comparing Light and Dark values for taxa represented in both groups.
 
-![Paired differences and ratios]({{ site.baseurl }}/photophysiology_homework_2026/figures/figure_3_paired_differences_ratios.png)
+![Paired differences and ratios](../photophysiology_homework_2026/figures/figure_3_paired_differences_ratios.png)
 
-**Figure 3.** Paired taxon comparison between Light and Dark groups. The top panels show absolute differences and the bottom panels show ratios.
+**Figure 3.** Paired taxon comparison between Light and Dark groups. The top panels show absolute differences and the bottom panels show ratios. A ratio of 1 indicates no difference between groups.
 
-![Q-Q plots]({{ site.baseurl }}/photophysiology_homework_2026/figures/figure_4_qq_plots.png)
+![Q-Q plots](../photophysiology_homework_2026/figures/figure_4_qq_plots.png)
 
-**Figure 4.** Q-Q plots for fitted parameters.
+**Figure 4.** Q-Q plots for fitted parameters. With the small sample size, these plots are used for visual assessment rather than strong distributional claims.
 
 ## Interpretation
 
-The fitted curves produced interpretable parameter estimates for 11 Light samples and 8 Dark samples after two problematic Light curves were removed. Seven taxa were available in both groups and could be used for paired comparison.
+The fitted curves produced interpretable parameter estimates for 11 Light specimens and 8 Dark specimens after two problematic Light curves were removed. The paired tests did not produce Benjamini-Hochberg adjusted p-values below 0.05 for `Am`, `AQY`, `Rd`, or `Ik`. Therefore, the available data do not provide strong statistical evidence for a consistent difference between Light and Dark groups.
 
-The paired Wilcoxon tests did not produce Benjamini-Hochberg adjusted p-values below 0.05 for `Am`, `AQY`, `Rd`, or `Ik`. Therefore, the analysis does not provide strong statistical evidence for a consistent Light-Dark difference in the fitted parameters.
+This does not mean that habitat/light exposure has no biological effect. The sample size is small, the design is uneven among taxa, and some taxa show large taxon-specific differences in the paired difference and ratio plots. For example, Dictyota showed higher fitted `Am` and `Ik` in the Light group than in the Dark group, while Colpomenia showed lower fitted `Am` in the Light group than in the Dark group. This suggests that taxon identity may interact with habitat/light environment.
 
-However, this should not be interpreted as proof that no biological differences exist. The sample size is small, and some taxa show large taxon-specific differences in the paired difference and ratio plots. For this dataset, the biological interpretation should rely on the combination of fitted curves, parameter magnitudes, paired differences, and uncertainty caused by small sample size.
-
-The strongest limitations are the small and uneven sample set, the removal of two Light samples, and the fact that only taxa represented in both groups could be used for paired tests. These results should therefore be treated as exploratory evidence for photophysiological patterns among the sampled algae.
+The main conclusion is that these data are useful as preliminary results, but not as a strong final test of habitat effects. A better follow-up experiment should use a balanced design with the same taxa sampled from replicated light-exposed and shaded habitats, with the same number of specimens per taxon and habitat. The field site, shore height or depth, collection time, transport conditions, acclimation time, and species-identification method should be recorded explicitly. This would make it possible to separate habitat effects from taxon-specific differences and sampling imbalance.
 
 ## Supporting Files
 
 The supporting files for this post are saved in `photophysiology_homework_2026/`:
 
-- [`photophysiology_homework_2026.Rmd`]({{ site.baseurl }}/photophysiology_homework_2026/photophysiology_homework_2026.Rmd): reproducible R analysis source.
-- [`photophysiology_parameters_tidy.csv`]({{ site.baseurl }}/photophysiology_homework_2026/outputs/photophysiology_parameters_tidy.csv): tidy parameter table in the requested format.
-- [`photophysiology_parameters_with_readme.xlsx`]({{ site.baseurl }}/photophysiology_homework_2026/outputs/photophysiology_parameters_with_readme.xlsx): Excel table with `Data` and `ReadMe` sheets.
-- [`photophysiology_homework_environment.RData`]({{ site.baseurl }}/photophysiology_homework_2026/outputs/photophysiology_homework_environment.RData): saved R environment.
-- [`photophysiology_summary_table.csv`]({{ site.baseurl }}/photophysiology_homework_2026/outputs/photophysiology_summary_table.csv): exported summary table.
-- [`paired_wilcoxon_tests.csv`]({{ site.baseurl }}/photophysiology_homework_2026/outputs/paired_wilcoxon_tests.csv): exported statistical test table.
-- [`paired_taxon_differences.csv`]({{ site.baseurl }}/photophysiology_homework_2026/outputs/paired_taxon_differences.csv): exported paired taxon differences and ratios.
-- [`package_versions.csv`]({{ site.baseurl }}/photophysiology_homework_2026/outputs/package_versions.csv): package names and versions.
+- [`data/Photophysiology_metadata.csv`](../photophysiology_homework_2026/data/Photophysiology_metadata.csv): specimen metadata table.
+- [`data/light.csv`](../photophysiology_homework_2026/data/light.csv): raw Light group photophysiology file.
+- [`data/dark.csv`](../photophysiology_homework_2026/data/dark.csv): raw Dark group photophysiology file.
+- [`photophysiology_homework_2026.Rmd`](../photophysiology_homework_2026/photophysiology_homework_2026.Rmd): reproducible R analysis source.
+- [`photophysiology_parameters_tidy.csv`](../photophysiology_homework_2026/outputs/photophysiology_parameters_tidy.csv): tidy calculated photophysiology table.
+- [`photophysiology_parameters_with_readme.xlsx`](../photophysiology_homework_2026/outputs/photophysiology_parameters_with_readme.xlsx): Excel output with `Data` and `ReadMe` sheets.
+- [`photophysiology_homework_environment.RData`](../photophysiology_homework_2026/outputs/photophysiology_homework_environment.RData): saved R environment.
+- [`photophysiology_summary_table.csv`](../photophysiology_homework_2026/outputs/photophysiology_summary_table.csv): exported summary table.
+- [`paired_wilcoxon_tests.csv`](../photophysiology_homework_2026/outputs/paired_wilcoxon_tests.csv): exported statistical test table.
+- [`paired_taxon_differences.csv`](../photophysiology_homework_2026/outputs/paired_taxon_differences.csv): exported paired taxon differences and ratios.
+- [`package_versions.csv`](../photophysiology_homework_2026/outputs/package_versions.csv): package names and versions.
