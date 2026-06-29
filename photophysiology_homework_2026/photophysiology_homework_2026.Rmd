@@ -61,7 +61,7 @@ The data are PAM/FIRe-style fluorescence measurements from two protocols/groups,
 
 # Materials and Methods
 
-Photophysiology measurements were supplied as two raw semicolon-separated files: `light (1).csv` and `dark (1).csv`. Each file contains PAR steps and repeated fluorescence-derived measurements for multiple samples, including electron transport rate columns named `ETR1`, `ETR2`, and so on. Sample identities and taxa were assigned using `Photophysiology_metadata.csv`.
+Photophysiology measurements were supplied as two raw semicolon-separated files, saved in this repository as `data/light.csv` and `data/dark.csv`. Each file contains PAR steps and repeated fluorescence-derived measurements for multiple samples, including electron transport rate columns named `ETR1`, `ETR2`, and so on. Sample identities and taxa were assigned using `data/Photophysiology_metadata.csv`.
 
 The data were analyzed in R version `r getRversion()`. The workflow used the packages listed in Table 1. Dates and times were converted to R date/time classes, ETR measurements were reshaped from wide to long format, and sample metadata were joined by group and sample number. ETR values equal to zero at PAR values greater than zero were treated as missing values because the example script states that those values indicate that measurement had ended.
 
@@ -97,7 +97,7 @@ write.csv(package_versions, "outputs/package_versions.csv", row.names = FALSE)
 # Data Processing
 
 ```{r load-data}
-metadata_raw <- read.csv("Photophysiology_metadata.csv", stringsAsFactors = FALSE)
+metadata_raw <- read.csv("data/Photophysiology_metadata.csv", stringsAsFactors = FALSE)
 
 metadata <- metadata_raw %>%
   mutate(
@@ -136,8 +136,8 @@ read_pam_file <- function(file, group, etr_columns) {
     )
 }
 
-light_etr <- read_pam_file("light (1).csv", "Light", paste0("ETR", 1:13))
-dark_etr <- read_pam_file("dark (1).csv", "Dark", paste0("ETR", 1:8))
+light_etr <- read_pam_file("data/light.csv", "Light", paste0("ETR", 1:13))
+dark_etr <- read_pam_file("data/dark.csv", "Dark", paste0("ETR", 1:8))
 
 light_etr_filtered <- light_etr %>%
   filter(!Sample_ID %in% c("Light_3", "Light_9"))
