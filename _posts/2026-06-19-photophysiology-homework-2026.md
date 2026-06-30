@@ -10,7 +10,7 @@ This post reports a photophysiology exercise from the Research Methods course. T
 
 ## Aim
 
-The aim was to compare photophysiological performance of algae assigned to two groups, `Light` and `Dark`, and to evaluate whether the available class data provide preliminary evidence for differences in photosynthetic response between these groups. These groups are treated as proxies for habitat/light environment.
+The aim was to compare the photophysiological performance of algae collected from two different light environments: algae from shaded areas, referred to here as the Dark group, and algae from sun-exposed areas, referred to as the Light group, and to evaluate whether the available class data provide preliminary evidence for differences in photosynthetic response between these groups. These groups are treated as proxies for habitat/light environment.
 
 Because the dataset is small and uneven among taxa, the results are interpreted as preliminary evidence that can guide a better follow-up experiment rather than as a definitive test of habitat effects.
 
