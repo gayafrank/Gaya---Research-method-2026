@@ -198,14 +198,14 @@ The main conclusion is that these data are useful as preliminary results, but no
 
 The supporting files for this post are saved in `photophysiology_homework_2026/`:
 
-- [`data/Photophysiology_metadata.csv`](../photophysiology_homework_2026/data/Photophysiology_metadata.csv): specimen metadata table.
-- [`data/light.csv`](../photophysiology_homework_2026/data/light.csv): raw Light group photophysiology file.
-- [`data/dark.csv`](../photophysiology_homework_2026/data/dark.csv): raw Dark group photophysiology file.
-- [`photophysiology_homework_2026.Rmd`](../photophysiology_homework_2026/photophysiology_homework_2026.Rmd): reproducible R analysis source.
-- [`photophysiology_parameters_tidy.csv`](../photophysiology_homework_2026/outputs/photophysiology_parameters_tidy.csv): tidy calculated photophysiology table.
-- [`photophysiology_parameters_with_readme.xlsx`](../photophysiology_homework_2026/outputs/photophysiology_parameters_with_readme.xlsx): Excel output with `Data` and `ReadMe` sheets.
-- [`photophysiology_homework_environment.RData`](../photophysiology_homework_2026/outputs/photophysiology_homework_environment.RData): saved R environment.
-- [`photophysiology_summary_table.csv`](../photophysiology_homework_2026/outputs/photophysiology_summary_table.csv): exported summary table.
-- [`paired_wilcoxon_tests.csv`](../photophysiology_homework_2026/outputs/paired_wilcoxon_tests.csv): exported statistical test table.
-- [`paired_taxon_differences.csv`](../photophysiology_homework_2026/outputs/paired_taxon_differences.csv): exported paired taxon differences and ratios.
-- [`package_versions.csv`](../photophysiology_homework_2026/outputs/package_versions.csv): package names and versions.
+- [`data/Photophysiology_metadata.csv`](https://github.com/gayafrank/Gaya---Research-method-2026/blob/main/photophysiology_homework_2026/data/Photophysiology_metadata.csv): specimen metadata table.
+- [`data/light.csv`](https://github.com/gayafrank/Gaya---Research-method-2026/blob/main/photophysiology_homework_2026/data/light.csv): raw Light group photophysiology file.
+- [`data/dark.csv`](https://github.com/gayafrank/Gaya---Research-method-2026/blob/main/photophysiology_homework_2026/data/dark.csv): raw Dark group photophysiology file.
+- [`photophysiology_homework_2026.Rmd`](https://github.com/gayafrank/Gaya---Research-method-2026/blob/main/photophysiology_homework_2026/photophysiology_homework_2026.Rmd): reproducible R analysis source.
+- [`photophysiology_parameters_tidy.csv`](https://github.com/gayafrank/Gaya---Research-method-2026/blob/main/photophysiology_homework_2026/outputs/photophysiology_parameters_tidy.csv): tidy calculated photophysiology table.
+- [`photophysiology_parameters_with_readme.xlsx`](https://github.com/gayafrank/Gaya---Research-method-2026/blob/main/photophysiology_homework_2026/outputs/photophysiology_parameters_with_readme.xlsx): Excel output with `Data` and `ReadMe` sheets.
+- [`photophysiology_homework_environment.RData`](https://github.com/gayafrank/Gaya---Research-method-2026/blob/main/photophysiology_homework_2026/outputs/photophysiology_homework_environment.RData): saved R environment.
+- [`photophysiology_summary_table.csv`](https://github.com/gayafrank/Gaya---Research-method-2026/blob/main/photophysiology_homework_2026/outputs/photophysiology_summary_table.csv): exported summary table.
+- [`paired_wilcoxon_tests.csv`](https://github.com/gayafrank/Gaya---Research-method-2026/blob/main/photophysiology_homework_2026/outputs/paired_wilcoxon_tests.csv): exported statistical test table.
+- [`paired_taxon_differences.csv`](https://github.com/gayafrank/Gaya---Research-method-2026/blob/main/photophysiology_homework_2026/outputs/paired_taxon_differences.csv): exported paired taxon differences and ratios.
+- [`package_versions.csv`](https://github.com/gayafrank/Gaya---Research-method-2026/blob/main/photophysiology_homework_2026/outputs/package_versions.csv): package names and versions.
